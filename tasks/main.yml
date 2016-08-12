@@ -1,6 +1,9 @@
 ---
 # tasks file for ansible-role-analytics
 
+- name: Base directory for analytics
+  file: path="{{ ansible_env.HOME}}"/analytics state=directory mode=0755
+
 - name: Python for Human and Face Detection by OpenCV
   copy: src={{ item }} dest="{{ ansible_env.HOME}}"/analytics/{{ item }}
   #with_items: 
