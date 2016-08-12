@@ -2,6 +2,18 @@
 # tasks file for ansible-role-analytics
 
 - name: Python for Human and Face Detection by OpenCV
-  copy: src=human-face-detection.py dest="{{ ansible_env.HOME}}"/analytics/human-face-detection.py
+  copy: src={{ item }} dest="{{ ansible_env.HOME}}"/analytics/{{ item }}
+  #with_items: 
+  with_fileglob:
+  - files/pedestrian_*.py
+  #- pedestrian_and_face_detection.py
+  # - pedestrian_detection.py
+  # - pedestrian_detection_by_spark.py
   when: analytics == "human-face-detection"
 
+- name: Download XML classifiers of Face and Eye Detection by OpenCV
+  get_url: url={{ item }} dest="{{ ansible_env.HOME}}"/analytics
+  with_items:
+  - https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
+  - https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_eye.xml
+  when: analytics == "human-face-detection"
