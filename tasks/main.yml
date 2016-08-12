@@ -1,0 +1,7 @@
+---
+# tasks file for ansible-role-analytics
+
+- name: Python for Human and Face Detection by OpenCV
+  copy: src=human-face-detection.py dest="{{ ansible_env.HOME}}"/analytics/human-face-detection.py
+  when: analytics == "human-face-detection"
+
